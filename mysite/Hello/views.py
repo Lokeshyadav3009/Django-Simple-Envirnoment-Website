@@ -1,18 +1,29 @@
 from django.shortcuts import render, HttpResponse
 from django.template import loader
-from Hello.models import Feedback
-from .form import PostForm
+from .models import Contact
 
 # Create your views here.
-def firstfunc(request):
+def homep(request):
     return render(request,'index.html')
 
-def DetailView(request):
-    form_class = PostForm()
-    if request.method == "POST":
-        form_class = PostForm(request.POST)
-        if form_class.is_valid():
-            objs = form_class.save()
-        else:
-            print("ERROR FORM INVALID")
+def reg(request):
+    if request.method=="POST":
+        contact = Contact()
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        contact.name= name
+        contact.email=email
+        contact.subject=subject
+        contact.save()
+        # return HttpResponse("<h1>THANK FOR CONTACT US</h1>")
+        result()
+
+
+    return render(request,'form.html')
+
+def result(request):
+    return render(request,'result.html')
+
+
     
